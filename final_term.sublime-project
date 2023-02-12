@@ -1,0 +1,20 @@
+{
+	"folders":
+	[
+		{
+			"path": "__pycache__",
+		},
+		{
+			"path": "Designer",
+		},
+		{
+			"path": "UI",
+		},
+		{
+			"path": "Icons",
+		},
+		{
+			"path": "User data"
+		},
+	],
+}

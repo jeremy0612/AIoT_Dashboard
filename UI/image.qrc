@@ -1,0 +1,19 @@
+<RCC>
+  <qresource prefix="p">
+    <file>../Icons/closeapp_icon.png</file>
+    <file>../Icons/icons8-white-large-square-48.png</file>
+    <file>../Icons/icom-removebg.jpg</file>
+    <file>../Icons/Capture.PNG</file>
+  </qresource>
+  <qresource prefix="icons">
+    <file>../Icons/more-horizontal.png</file>
+    <file>data-analysis.png</file>
+    <file>help.png</file>
+    <file>home.png</file>
+    <file>../Icons/icons8-menu.png</file>
+    <file>../Icons/information.png</file>
+    <file>../Icons/menu.png</file>
+    <file>../Icons/report.png</file>
+    <file>../Icons/settings.png</file>
+  </qresource>
+</RCC>
