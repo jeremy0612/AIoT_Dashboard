@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1282</width>
-    <height>894</height>
+    <width>833</width>
+    <height>664</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -57,6 +57,7 @@
 {
 	background-color: #16191d;
 }
+/* ------------ All Buttons style setting -------------- */ 
 #line_chart_button:hover,#bar_chart_button:hover,#pie_chart_button:hover,#donut_chart_button:hover,#change_device_button:hover,#scatter_chart_button:hover,#log_out_button:hover
 {
 	background-color:#000000;
@@ -68,6 +69,7 @@
 	border-radius: 15px;
 	padding:10;
 }
+
 #change_device_button
 {
 	top-margin:10;
@@ -237,6 +239,23 @@
                <property name="icon">
                 <iconset>
                  <normaloff>../Icons/tv.png</normaloff>../Icons/tv.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>50</width>
+                 <height>50</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="decvice_control">
+               <property name="text">
+                <string>DEVICE CONTROL</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../Icons/disc.png</normaloff>../Icons/disc.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -459,7 +478,7 @@
              </size>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="setting_menu">
              <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -652,6 +671,31 @@ togiahuy</string>
                 <property name="icon">
                  <iconset>
                   <normaloff>../Icons/disc.png</normaloff>../Icons/disc.png</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="device_menu">
+             <layout class="QVBoxLayout" name="verticalLayout_17">
+              <item>
+               <widget class="QPushButton" name="pushButton_3">
+                <property name="text">
+                 <string>PushButton</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_4">
+                <property name="text">
+                 <string>PushButton</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_5">
+                <property name="text">
+                 <string>PushButton</string>
                 </property>
                </widget>
               </item>
@@ -912,11 +956,17 @@ togiahuy</string>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_12">
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
           <item>
            <widget class="QStackedWidget" name="main_content">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>10</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="currentIndex">
-             <number>3</number>
+             <number>4</number>
             </property>
             <widget class="QWidget" name="linechart"/>
             <widget class="QWidget" name="barchart"/>
@@ -937,6 +987,34 @@ togiahuy</string>
             </widget>
             <widget class="QWidget" name="scatterchart"/>
             <widget class="QWidget" name="donutchart"/>
+           </widget>
+          </item>
+          <item>
+           <widget class="QStackedWidget" name="stackedWidget_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>3</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <widget class="QWidget" name="page">
+             <layout class="QVBoxLayout" name="verticalLayout_12">
+              <item>
+               <widget class="QPushButton" name="pushButton_2">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>PushButton</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="page_2"/>
            </widget>
           </item>
          </layout>

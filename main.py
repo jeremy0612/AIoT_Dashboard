@@ -1,17 +1,17 @@
 from PyQt5.QtWidgets import QMainWindow ,QApplication, QVBoxLayout
 from PyQt5 import uic,QtCore
-from chart import Piechart,Barchart,Linechart,Donutchart,Scatterchart
 from PyQt5.QtCore import QTimer,QDateTime,Qt
 from PyQt5.QtGui import QCursor
+from common_ui import *
+from chart import Piechart,Barchart,Linechart,Donutchart,Scatterchart
 import sys
 
 
-class MAIN_menu(QMainWindow):
+class MAIN_menu(MainWindow):
 	def __init__(self):
 		#---------------------Set status---------------------------------
-		super().__init__()
+		super().__init__(self)
 		uic.loadUi("UI/dialog.ui",self)
-		self.setWindowFlags(self.windowFlags() | QtCore.Qt.FramelessWindowHint)
 		self.normal_shown = True
 		self.pie_chart = Piechart()
 		self.bar_chart = Barchart()
@@ -157,19 +157,7 @@ class MAIN_menu(QMainWindow):
 		
 		#self.main_body_content.setLayout(self.pie_chart.vbox)
 
-	def mousePressEvent(self, event):
-	    if event.button() == Qt.LeftButton:
-	        self.moveFlag = True
-	        self.movePosition = event.globalPos() - self.pos()
-	        self.setCursor(QCursor(Qt.OpenHandCursor))
-	        event.accept()
-	def mouseMoveEvent(self, event):
-		if Qt.LeftButton and self.moveFlag:
-			self.move(event.globalPos() - self.movePosition)
-			event.accept()
-	def mouseReleaseEvent(self, event):
-		self.moveFlag = False
-		self.setCursor(Qt.ArrowCursor) #IBeamCursor/CrossCursor
+	
 
 if __name__ == '__main__':
 	app = QApplication(sys.argv)
