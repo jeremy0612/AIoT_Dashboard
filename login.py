@@ -1,4 +1,3 @@
-from PyQt5.QtGui import QCursor
 from common_ui import *
 import sys
 

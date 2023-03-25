@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QApplication,QWidget,QVBoxLayout
 from PyQt5.QtChart import QChart, QChartView, QBarSet, QPercentBarSeries, QBarCategoryAxis,QLineSeries,QPieSeries,QScatterSeries
 import sys
 from PyQt5.QtGui import QIcon,QPen,QPainter
-from PyQt5.QtCore import Qt ,QPointF
+from PyQt5.QtCore import Qt ,QPointF #, QObject
 from sheet_data import DEVICE_DATA
 import time
 
@@ -90,6 +90,7 @@ class Barchart():
 
 class Linechart():
     def __init__(self):
+        self.mode = ""
         self.data = DEVICE_DATA()
         self.series = QLineSeries()
         

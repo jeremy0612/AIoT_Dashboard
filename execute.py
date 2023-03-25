@@ -36,19 +36,15 @@ class APP():
 		else:
 			self.login.label.setText("   WRONG ACCOUNT!")
   	
-  	#def Add_user(self):
   		
 
 	def Change_intro_UI(self,a):
 		if a == "log in":
-			#self.login.showMinimized()
-			#self.login.close()
 			self.login.hide()
 			self.signup.show()
 		elif a == "sign up":
 			self.signup.hide()
 			self.login.show()
-   
 	def log_out(self):
 		self.main.close()
 		self.login.show()

@@ -58,13 +58,13 @@
 	background-color: #16191d;
 }
 /* ------------ All Buttons style setting -------------- */ 
-#line_chart_button:hover,#bar_chart_button:hover,#pie_chart_button:hover,#donut_chart_button:hover,#change_device_button:hover,#scatter_chart_button:hover,#log_out_button:hover
+#line_chart_button:hover,#bar_chart_button:hover,#pie_chart_button:hover,#donut_chart_button:hover,#change_device_button:hover,#scatter_chart_button:hover,#log_out_button:hover,#gg_sheet:hover,#bluetooth:hover,#wifi:hover
 {
 	background-color:#000000;
 	border-radius: 15px;
 	padding:10;
 }
-#line_chart_button,#bar_chart_button,#pie_chart_button,#donut_chart_button,#change_device_button,#scatter_chart_button,#log_out_button
+#line_chart_button,#bar_chart_button,#pie_chart_button,#donut_chart_button,#change_device_button,#scatter_chart_button,#log_out_button,#gg_sheet,#bluetooth,#wifi
 {
 	border-radius: 15px;
 	padding:10;
@@ -249,7 +249,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="decvice_control">
+              <widget class="QPushButton" name="device_button">
                <property name="text">
                 <string>DEVICE CONTROL</string>
                </property>
@@ -478,7 +478,7 @@
              </size>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>3</number>
             </property>
             <widget class="QWidget" name="setting_menu">
              <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -679,23 +679,47 @@ togiahuy</string>
             <widget class="QWidget" name="device_menu">
              <layout class="QVBoxLayout" name="verticalLayout_17">
               <item>
-               <widget class="QPushButton" name="pushButton_3">
+               <widget class="QPushButton" name="gg_sheet">
+                <property name="font">
+                 <font>
+                  <family>Arial</family>
+                  <pointsize>11</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
                 <property name="text">
-                 <string>PushButton</string>
+                 <string>Google Sheets</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_4">
+               <widget class="QPushButton" name="bluetooth">
+                <property name="font">
+                 <font>
+                  <family>Arial</family>
+                  <pointsize>12</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
                 <property name="text">
-                 <string>PushButton</string>
+                 <string>Bluetooth</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_5">
+               <widget class="QPushButton" name="wifi">
+                <property name="font">
+                 <font>
+                  <family>Arial</family>
+                  <pointsize>12</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
                 <property name="text">
-                 <string>PushButton</string>
+                 <string>Wifi</string>
                 </property>
                </widget>
               </item>

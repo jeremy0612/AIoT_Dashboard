@@ -13,7 +13,6 @@ class MainWindow(QMainWindow):
 		if event.button() == Qt.LeftButton:
 			self.moveFlag = True
 			self.movePosition = event.globalPos() - self.pos()
-			self.setCursor(QCursor(Qt.OpenHandCursor))
 			event.accept()
 	def mouseMoveEvent(self, event):
 		mouse_x,mouse_y = QCursor.pos().x(),QCursor.pos().y()
@@ -22,6 +21,7 @@ class MainWindow(QMainWindow):
 		#print("App position:{} {}\nMouse position:{} {}".format(x,y,mouse_x,mouse_y))
 		if Qt.LeftButton and self.moveFlag:
 			if mouse_y-y in range(60): 
+				self.setCursor(QCursor(Qt.OpenHandCursor))
 				self.move(event.globalPos() - self.movePosition)
 				event.accept()
 				

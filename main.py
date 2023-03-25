@@ -1,10 +1,11 @@
 from PyQt5.QtWidgets import QMainWindow ,QApplication, QVBoxLayout
 from PyQt5 import uic,QtCore
-from PyQt5.QtCore import QTimer,QDateTime,Qt
+from PyQt5.QtCore import QTimer,QDateTime,Qt, QThread
 from PyQt5.QtGui import QCursor
 from common_ui import *
 from chart import Piechart,Barchart,Linechart,Donutchart,Scatterchart
 import sys
+import threading
 
 
 class MAIN_menu(MainWindow):
@@ -13,20 +14,31 @@ class MAIN_menu(MainWindow):
 		super().__init__(self)
 		uic.loadUi("UI/dialog.ui",self)
 		self.normal_shown = True
+
+		self.mode = ''
 		self.pie_chart = Piechart()
 		self.bar_chart = Barchart()
 		self.line_chart = Linechart()
 		self.donut_chart = Donutchart()
 		self.scatter_chart = Scatterchart()
 		
+
 		self.chart_timer = QTimer()
 		self.chart_timer.timeout.connect(lambda: self.update_chart('1'))
-		self.chart_timer.start(17000)
+		self.chart_timer.start(7000)
 
 		self.chart_timer_2 = QTimer()
 		self.chart_timer_2.timeout.connect(lambda: self.update_chart('2'))
 		self.chart_timer_2.start(7000)
-
+			
+		'''
+		t = QThread()
+		self.line_chart.moveToThread(t)
+		thread.started.connect(self.line_chart.update_data)
+		t.start()
+		t.join()
+		'''
+		
 		self.exe_timer = QTimer()
 		self.exe_timer.timeout.connect(lambda: self.current_time.setText(QDateTime.currentDateTime().toString('yyyy-MM-dd hh:mm:ss dddd')))
 		self.exe_timer.start(1000)
@@ -48,12 +60,20 @@ class MAIN_menu(MainWindow):
 		self.pie_chart_button.clicked.connect(lambda: self.main_content.setCurrentWidget(self.piechart))
 		self.donut_chart_button.clicked.connect(lambda: self.main_content.setCurrentWidget(self.donutchart))
 		self.scatter_chart_button.clicked.connect(lambda: self.main_content.setCurrentWidget(self.scatterchart))
-		self		
+		
+		self.gg_sheet.clicked.connect(lambda: self.change_mode("sheet"))
+		self.bluetooth.clicked.connect(lambda: self.change_mode("bluetooth"))
+		self.wifi.clicked.connect(lambda: self.change_mode("wifi"))
+	
+		#self.gg_sheet.clicked.connect(lambda: (setattr(self, "mode", "sheet")))
+		#self.bluetooth.clicked.connect(lambda: (setattr(self, "mode", "bluetooth")))
+		#self.wifi.clicked.connect(lambda: (setattr(self, "mode", "wifi")))
+	
 
 		#================================================================
 
 		#------------------Data analyst menu-----------------------------
-		self.more_menu_status = [0,False,False,False,False,False,False]
+		self.more_menu_status = [0,False,False,False,False,False,False,False]
 							  #  sta,data,report,setting,inform,help,home,close 
 		self.data_button.clicked.connect(lambda: self.more_menu(1))
 		self.report_button.clicked.connect(lambda: self.more_menu(2))
@@ -62,20 +82,33 @@ class MAIN_menu(MainWindow):
 		self.help_button.clicked.connect(lambda: self.more_menu(5))
 		self.home_button.clicked.connect(lambda: self.more_menu(6))
 		self.close_menu_button.clicked.connect(lambda: self.more_menu(7))
+		self.device_button.clicked.connect(lambda: self.more_menu(8))
 		print(self.more_menu_status)
 		#================================================================
 		
 		self.Set_up_UI()
+
+	def change_mode(self,mode):
+		if mode == "sheet":
+			self.mode = mode
+			self.line_chart.data.find_sheet()
+		elif mode == "bluetooth":
+			self.mode = mode
+			self.line_chart.data.find_device()
+
 	def update_chart(self,_a):
-		print("updating")
-		if _a=='1':
-			self.line_chart.chart.removeAllSeries()
-			self.line_chart.update_data()
-			self.line_chart.chart.addSeries(self.line_chart.series)
-		else:
-			self.scatter_chart.chart.removeAllSeries()
-			self.scatter_chart.update_data()
-			self.scatter_chart.chart.addSeries(self.scatter_chart.series)
+		try:
+			#print("updating")
+			if _a=='1':
+				self.line_chart.chart.removeAllSeries()
+				self.line_chart.update_data()
+				self.line_chart.chart.addSeries(self.line_chart.series)
+			else:
+				self.scatter_chart.chart.removeAllSeries()
+				self.scatter_chart.update_data()
+				self.scatter_chart.chart.addSeries(self.scatter_chart.series)
+		except:
+			return
 	def deleteItems(self,layout):
              if layout is not None:
                  while layout.count():
@@ -86,6 +119,7 @@ class MAIN_menu(MainWindow):
                      else:
                          deleteItems(item.layout())
 	def more_menu(self,b):
+		print(self.mode)
 		if self.more_menu_status[0]!=0 and b==7:
 			self.stackedWidget.setVisible(False) 
 			self.frame_4.setVisible(False)
@@ -97,10 +131,11 @@ class MAIN_menu(MainWindow):
 			self.inform_button.setStyleSheet("")
 			self.home_button.setStyleSheet("")
 			self.setting_button.setStyleSheet("")
+			self.device_button.setStyleSheet("")
 		else:
 			self.frame_4.setVisible(True)
 			self.stackedWidget.setVisible(True)
-			for i in range(1,7):
+			for i in range(1,8):
 				self.more_menu_status[i]=False
 			if b==1 :
 				self.stackedWidget.setCurrentWidget(self.data_menu) 
@@ -132,6 +167,11 @@ class MAIN_menu(MainWindow):
 				self.more_menu_status[6] = True
 				self.more_menu_status[0] = b
 				self.home_button.setStyleSheet("background-color: #1f232a;")
+			elif b==8:
+				self.stackedWidget.setCurrentWidget(self.device_menu) 
+				self.more_menu_status[7] = True
+				self.more_menu_status[0] = b
+				self.device_button.setStyleSheet("background-color: #1f232a;")
 		#print(self.more_menu_status)	#debug
 			
 
