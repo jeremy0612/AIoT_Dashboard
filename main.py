@@ -85,6 +85,15 @@ class MAIN_menu(MainWindow):
 		self.device_button.clicked.connect(lambda: self.more_menu(8))
 		print(self.more_menu_status)
 		#================================================================
+
+		#------------------Controller menu-----------------------------
+		self.up_move.clicked.connect(lambda: self.Controller("up"))
+		self.down_move.clicked.connect(lambda: self.Controller("down"))
+		self.right_move.clicked.connect(lambda: self.Controller("right"))
+		self.left_move.clicked.connect(lambda: self.Controller("left"))
+		
+
+		#================================================================
 		
 		self.Set_up_UI()
 
@@ -92,10 +101,14 @@ class MAIN_menu(MainWindow):
 		if mode == "sheet":
 			self.mode = mode
 			self.line_chart.data.find_sheet()
+			print("debug")
+			self.stackedWidget_2.setVisible(False)
+			#self.scatter_chart.data.find_sheet()
 		elif mode == "bluetooth":
 			self.mode = mode
 			self.line_chart.data.find_device()
-
+			self.stackedWidget_2.setVisible(True)
+			#self.scatter_chart.data.find_device()
 	def update_chart(self,_a):
 		try:
 			#print("updating")
@@ -103,12 +116,19 @@ class MAIN_menu(MainWindow):
 				self.line_chart.chart.removeAllSeries()
 				self.line_chart.update_data()
 				self.line_chart.chart.addSeries(self.line_chart.series)
-			else:
+				self.scatter_chart.data.values = self.line_chart.data.values
 				self.scatter_chart.chart.removeAllSeries()
-				self.scatter_chart.update_data()
+				#self.scatter_chart.update_data()
 				self.scatter_chart.chart.addSeries(self.scatter_chart.series)
+			else:
+				pass
 		except:
 			return
+
+	def Controller(self,command):
+		self.line_chart.data.send_command(command)
+		pass
+
 	def deleteItems(self,layout):
              if layout is not None:
                  while layout.count():
@@ -119,7 +139,7 @@ class MAIN_menu(MainWindow):
                      else:
                          deleteItems(item.layout())
 	def more_menu(self,b):
-		print(self.mode)
+		#print(self.mode)
 		if self.more_menu_status[0]!=0 and b==7:
 			self.stackedWidget.setVisible(False) 
 			self.frame_4.setVisible(False)
@@ -186,6 +206,7 @@ class MAIN_menu(MainWindow):
 	def Set_up_UI(self):
 		self.stackedWidget.setVisible(False) 
 		self.frame_4.setVisible(False)
+		self.stackedWidget_2.setVisible(False)
 		self.Set_up_chart()
 	def Set_up_chart(self):
 		self.linechart.setLayout(self.line_chart.vbox)

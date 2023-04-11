@@ -1,11 +1,11 @@
 from PyQt5.QtWidgets import QMainWindow 
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication,QWidget,QVBoxLayout
-from PyQt5.QtChart import QChart, QChartView, QBarSet, QPercentBarSeries, QBarCategoryAxis,QLineSeries,QPieSeries,QScatterSeries
+from PyQt5.QtWidgets import QApplication,QWidget,QVBoxLayout,QSizePolicy
+from PyQt5.QtChart import QChart, QChartView, QBarSet, QPercentBarSeries, QBarCategoryAxis,QLineSeries,QPieSeries,QScatterSeries,QValueAxis
 import sys
 from PyQt5.QtGui import QIcon,QPen,QPainter
 from PyQt5.QtCore import Qt ,QPointF #, QObject
-from sheet_data import DEVICE_DATA
+from device_data import DEVICE_DATA
 import time
 
 class Piechart():    
@@ -94,10 +94,8 @@ class Linechart():
         self.data = DEVICE_DATA()
         self.series = QLineSeries()
         
-
         self.series << QPointF(11,1) << QPointF(13,3)\
         << QPointF(17,6) << QPointF(18,3) << QPointF(20,20)
- 
  
         self.chart = QChart()
         self.chart.addSeries(self.series)
@@ -105,19 +103,72 @@ class Linechart():
         self.chart.setTitle("Relative Moisture to Temperature Ratio")
         self.chart.setTheme(QChart.ChartThemeBlueCerulean)
         self.chart.createDefaultAxes()
- 
+        '''
+        # assume chart is your QChart object
+        self.x_axis = QValueAxis()
+        self.y_axis = QValueAxis()
+
+        # set the range of the axes to match your data
+        self.x_axis.setRange(0, 15)
+        self.y_axis.setRange(0, 15)
+
+        # add the axes to the chart
+        self.chart.addAxis(self.x_axis, Qt.AlignBottom)
+        self.chart.addAxis(self.y_axis, Qt.AlignLeft)
+        '''
         self.chartview = QChartView(self.chart)
+        #self.chartview.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        #self.chartview.setMinimumSize(400, 300)
         self.chartview.setRenderHint(QPainter.Antialiasing)
         
-
         self.vbox = QVBoxLayout()
         self.vbox.addWidget(self.chartview)
     def update_data(self):
         self.series = QLineSeries()
         self.data.get_data()
+        print(self.data.mode)
+        #print(self.data.values)
+        if len(self.data.values) >= 10:
+            self.data.values = self.data.values[1:]
+
         for i in self.data.values:
             try:
-                self.series.append(float(i[0]),float(i[1]))
+                self.series.append(float(i[1]),float(i[0]))
+                print(float(i[0]),float(i[1]))
+            except:
+                continue
+
+    def assign_chart(self,widget):
+        self.widget.setLayout(self.vbox)
+
+class Scatterchart():
+    def __init__(self):
+        self.data = DEVICE_DATA()
+        self.series = QScatterSeries()
+        
+        self.series << QPointF(11,1) << QPointF(13,3)\
+        << QPointF(17,6) << QPointF(18,3) << QPointF(20,20)
+ 
+        self.chart = QChart()
+        self.chart.addSeries(self.series)
+        self.chart.setAnimationOptions(QChart.SeriesAnimations)
+        self.chart.setTitle("Relative Moisture to Temperature Ratio")
+        self.chart.setTheme(QChart.ChartThemeDark)
+        self.chart.createDefaultAxes()
+ 
+        self.chartview = QChartView(self.chart)
+        #self.chartview.setRenderHint(QPainter.Antialiasing)
+        
+        self.vbox = QVBoxLayout()
+        self.vbox.addWidget(self.chartview)
+    def update_data(self):
+        self.series = QScatterSeries()
+        #self.data.get_data()
+        print(self.data.mode)
+        print("debug",self.data.values)
+        for i in self.data.values:
+            try:
+                self.series.append(float(i[1]),float(i[0]))
             except:
                 continue    
 
@@ -151,39 +202,7 @@ class Donutchart():
         self.vbox.addWidget(self.chartview)
     def assign_chart(self,widget):
         self.widget.setLayout(self.vbox)
-class Scatterchart():
-    def __init__(self):
-        self.data = DEVICE_DATA()
-        self.series = QScatterSeries()
-        
 
-        self.series << QPointF(11,1) << QPointF(13,3)\
-        << QPointF(17,6) << QPointF(18,3) << QPointF(20,20)
- 
- 
-        self.chart = QChart()
-        self.chart.addSeries(self.series)
-        self.chart.setAnimationOptions(QChart.SeriesAnimations)
-        self.chart.setTitle("Relative Moisture to Temperature Ratio")
-        self.chart.setTheme(QChart.ChartThemeDark)
-        self.chart.createDefaultAxes()
- 
-        self.chartview = QChartView(self.chart)
-        #self.chartview.setRenderHint(QPainter.Antialiasing)
-        
-
-        self.vbox = QVBoxLayout()
-        self.vbox.addWidget(self.chartview)
-    def update_data(self):
-        self.series = QScatterSeries()
-        self.data.get_data()
-        for i in self.data.values:
-            try:
-                self.series.append(float(i[0]),float(i[1]))
-            except:
-                continue    
-    def assign_chart(self,widget):
-        self.widget.setLayout(self.vbox)
 if __name__ == "__main__":           
     App = QApplication(sys.argv)
     #window = Window()
