@@ -19,7 +19,7 @@ import serial.tools.list_ports
 
 class DATA():
     def __init__(self):
-        self.SERVICE_ACCOUNT_FILE = 'keys.json'
+        self.SERVICE_ACCOUNT_FILE = '../keys.json'
         self.SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
         self.creds = None
@@ -44,7 +44,7 @@ class DATA():
 class USER_DATA(DATA):
     def __init__(self):
         super().__init__()
-        self.SERVICE_ACCOUNT_FILE = 'keys.json'
+        self.SERVICE_ACCOUNT_FILE = '../keys.json'
         self.SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
         self.creds = None
         self.creds = service_account.Credentials.from_service_account_file(
@@ -66,13 +66,14 @@ class DEVICE_DATA(DATA):
         self.mode = ""
         self.values = []
         self.x = 1
+        self.device = None 
 
     def find_sheet(self):
         #-------------------- Google Sheets Mode ----------------------------
         if self.mode != "sheet":
             self.values = []
             self.mode = "sheet"
-        self.SERVICE_ACCOUNT_FILE = 'keys.json'
+        self.SERVICE_ACCOUNT_FILE = '../keys.json'
         self.SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
         self.creds = None
         self.creds = service_account.Credentials.from_service_account_file(
@@ -141,7 +142,25 @@ class DEVICE_DATA(DATA):
         if self.mode == "sheet":  
             try:
                 #self.values = []
+                print(os.getcwd())
+                self.creds = None
+                if os.path.exists('token.pickle'):
+                    with open('token.pickle', 'rb') as token:
+                        self.creds = pickle.load(token)
+                if not self.creds or not self.creds.valid:
+                    if self.creds and self.creds.expired and self.creds.refresh_token:
+                        self.creds.refresh(Request())
+                    else:
+                        flow = InstalledAppFlow.from_client_secrets_file(
+                            '../keys.json', SCOPES)
+                        self.creds = flow.run_local_server(port=0)
+                    with open('token.pickle', 'wb') as token:
+                        pickle.dump(self.creds, token)
                 self.service = build('sheets', 'v4', credentials=self.creds)
+
+                self.service = build('sheets', 'v4', credentials=self.creds)
+                print("more")
+                
                 # Call the Sheets API
                 self.sheet = self.service.spreadsheets()
                 self.result = self.sheet.values().get(spreadsheetId=self.SAMPLE_SPREADSHEET_ID,
@@ -153,24 +172,23 @@ class DEVICE_DATA(DATA):
         else:
             try:
                 #while True:
-                #data = self.device.read_all()
-                #print(type(data),size(data))
-                data = str(self.device.read_all()).split("\\r\\n")[:-1]
-                #print(data)
+                data = str(self.device.read_all()).split("--")[:-1]
                 data[0].rstrip("b'")
+                #data = self.device.read_all().decode('utf-8').rstrip()  # read the data from the buffer and decode it 
                 print(data)
-                print("++@",self.values,self.values[:-1])
                 #if len(self.values >= 14):
                  #   self.values = self.values[:-1]
                 #self.values = []
                 for i in data:
                     try:
-                        self.values.append([float(i),self.x])
+                        self.values.append([float(i[1:]),self.x])
                         self.x += 1
                     except:
                         continue                
+                print("++@",self.values,self.values[:-1])
+                
                 if self.device.in_waiting > 0:  # check if there is any data in the buffer
-                    data = self.device.readline().decode('utf-8').rstrip()  # read the data from the buffer and decode it
+                    data = self.device.readline().decode('latin').rstrip()  # read the data from the buffer and decode it
                     self.values += data
                     print(data,type(data))  # print the received data to the console
 
@@ -180,7 +198,11 @@ class DEVICE_DATA(DATA):
                 msgBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
                 returnValue = msgBox.exec() 
     def send_command(self,command):
-        self.device.write(b'{}\n'.format(command))
+        try:
+            self.device.write('{}'.format(command[0]).encode('utf-8'))
+        except:
+            pass
+        print(command)
         pass
 
             

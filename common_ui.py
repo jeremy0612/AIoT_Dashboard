@@ -9,6 +9,7 @@ class MainWindow(QMainWindow):
 	def __init__(self, arg):
 		super().__init__()
 		self.setWindowFlags(self.windowFlags() | QtCore.Qt.FramelessWindowHint)
+		self.moveFlag = None
 	def mousePressEvent(self, event):
 		if event.button() == Qt.LeftButton:
 			self.moveFlag = True

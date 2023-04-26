@@ -12,7 +12,7 @@ class MAIN_menu(MainWindow):
 	def __init__(self):
 		#---------------------Set status---------------------------------
 		super().__init__(self)
-		uic.loadUi("UI/dialog.ui",self)
+		uic.loadUi("../UI/dialog.ui",self)
 		self.normal_shown = True
 
 		self.mode = ''
@@ -27,10 +27,10 @@ class MAIN_menu(MainWindow):
 		self.chart_timer.timeout.connect(lambda: self.update_chart('1'))
 		self.chart_timer.start(7000)
 
-		self.chart_timer_2 = QTimer()
-		self.chart_timer_2.timeout.connect(lambda: self.update_chart('2'))
-		self.chart_timer_2.start(7000)
-			
+		
+
+		
+		#self.update_chart('1')	
 		'''
 		t = QThread()
 		self.line_chart.moveToThread(t)
@@ -87,19 +87,44 @@ class MAIN_menu(MainWindow):
 		#================================================================
 
 		#------------------Controller menu-----------------------------
-		self.up_move.clicked.connect(lambda: self.Controller("up"))
-		self.down_move.clicked.connect(lambda: self.Controller("down"))
-		self.right_move.clicked.connect(lambda: self.Controller("right"))
-		self.left_move.clicked.connect(lambda: self.Controller("left"))
+		self.command = "up"
+		self._stop_event = threading.Event()
+		self.up_move.pressed.connect(lambda: self.Controller("up",1))
+		self.down_move.pressed.connect(lambda: self.Controller("down",1))
+		self.right_move.pressed.connect(lambda: self.Controller("right",1))
+		self.left_move.pressed.connect(lambda: self.Controller("left",1))
 		
+		self.up_move.released.connect(lambda: self.Controller("up",0))
+		self.down_move.released.connect(lambda: self.Controller("down",0))
+		self.right_move.released.connect(lambda: self.Controller("right",0))
+		self.left_move.released.connect(lambda: self.Controller("left",0))
+		
+
+		self.hold = QTimer(self)
+		self.hold.setSingleShot(True)
+		#self.hold.timeout.connect(lambda: self.Controller_())
 
 		#================================================================
 		
 		self.Set_up_UI()
+	def Controller(self,command,mode):
+		if mode == 1:
+			self._stop_event.clear()  # clear the flag before starting the thread
+			t = threading.Thread(target=self.Controller_)
+			self.command = command
+			t.start()
+		else:
+			self._stop_event.set()
+		pass
+	def Controller_(self):
+		while not self._stop_event.is_set():
+			self.line_chart.data.send_command(self.command)
+		return
 
 	def change_mode(self,mode):
 		if mode == "sheet":
 			self.mode = mode
+			print("cc")
 			self.line_chart.data.find_sheet()
 			print("debug")
 			self.stackedWidget_2.setVisible(False)
@@ -111,9 +136,9 @@ class MAIN_menu(MainWindow):
 			#self.scatter_chart.data.find_device()
 	def update_chart(self,_a):
 		try:
-			#print("updating")
 			if _a=='1':
 				self.line_chart.chart.removeAllSeries()
+				print("updating")
 				self.line_chart.update_data()
 				self.line_chart.chart.addSeries(self.line_chart.series)
 				self.scatter_chart.data.values = self.line_chart.data.values
@@ -125,9 +150,7 @@ class MAIN_menu(MainWindow):
 		except:
 			return
 
-	def Controller(self,command):
-		self.line_chart.data.send_command(command)
-		pass
+	
 
 	def deleteItems(self,layout):
              if layout is not None:

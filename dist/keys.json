@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "iot-device-control-0612",
+  "private_key_id": "0764a8f75069e9867c4149bc18b291c092fa003a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCVgQ9flId4nsU5\n0ICixCvSvLEtcl7MbOfOlo5EorQ099XIsu3d3TmGSIi1lQ96cCpXL0JdNLRtoPo5\neSUew1Anc3Q+yIiSBPmkzLiQuLXWRZj4/8TRCfQj+0rOgiLxeXFKx5T6iTMuq9OB\n5Rc0UnzJmxRALzz+BxPwF7NGmnxjY6q0/ssbP4GT98MDrVcac0PP7bRFivBX1HUQ\n9Oib8r5P0yLQnoBvWHC4OVUzxb1JPVb8h1eV4iZv6ENgaQhXdTOaLpqBzXZPXqz5\nHrgNiCJn9+GI11zEwyNpU8L6EJmJpdYQvrfVFV4fiJt3l6MJ7avZVcnaGNiOMOWR\nejf0RAHBAgMBAAECggEAA0EIGNoJNF8ehvGeLOzEJoekbWCVAsBHoZULGXWQPwCs\nKzV4A++OS2sMvrN8F98/yR50p/6xAxufa/lEKcqVK1+K1Nk4+mvComC/q6iAquyZ\nUjdyfsec56OWIQSLqij0FFDRitp0vhFPzP7eZcKzMmZh7ju1bM9c2btmxYgwmq9j\nCQNht72Nqf9f+KsiBVpGv8HrkS3gK7ePfheNLHW34Bxh8YnlBKrfpkgPZdwua9yq\nfQ4GBLe5gM6DFIND/MIA5AcH/znfHRNp+AOsZm5YOH9RajuqhY0awPXxP9YdhUEH\nF2yJ7dy8Tx62H2bcBPOF3kUcoWr7/Utl850029EoWQKBgQDGE3HSvUBkif10sSEz\nNBsZLvzMjNEaPaUUxMxvThmT28KvNI7nwd/LFFYKnbNKddaE8b/VEFSfwYvQ57BI\nwlhzpUn761/v5tDLvvA3kbaA2Sw4PbUaMmUXcR8wDpr4hFp3UOqs/GYJrdpX+6Vs\nQrjE3rXOl/a3nI6uwIr3L9cmpwKBgQDBOWKGTcag2TcrvMDcEM4JzM9yMU7pKLXW\n2RyZ7NsPUx2aTxQfapv3Eg2VYOfYKDvsu66XNPVWkXvvHfgHzckkLGwXyBBrmPSg\ncUhPh7q94dUCY8k6fyG7HirYUEZJCRCFyshGFBGlqz8Cncn1KsDmLbydSC9GvdFU\nd0W2EyYJVwKBgBCYgnnot2N1GFJVoPV8USTsBexRhBeRwKobzxEoVwZHbGlnmu2a\nFdkbDBZ5nhMICoA7DRqZ8q0r9z36m4+NEQIngCpmTzR3f1kC13egcs0a5RSVPv5B\n6KxtIvLQ1nUqCbZjhjYWM6pt8ZRblkGa2YZNLqhvnRFHQcEsirgpPvqTAoGAcW8I\n4iOCuicK9ohHCGptKt+r4TQFSWf26HxpCAw+xg5bUJ2gCJmDmlZk1w8ezI1CMMY1\nxtr2NK4P/d6wH5S1wqC5jHSM/z26Tv5yHw5lmNedP1vpZIgB+2HIcVkfCf1iT8ku\nLcXWXlXcFeMgDufcesTa99LKvlLtMxMaP7uaFt0CgYEAqKYJbPZcojxQMaK4pgZF\nzvZwSQJEcP+p6GGDSE8h8nRETGwk1HLDIpWUHS0ebDDtu4+w4CTpHzy0IssqPriz\n5NNarrjEVCl4k6qCR7600utWJEvksBwphthsy2xSUn9zLin1e+dngCfUvHbPbD1N\n7pW8ReADobBtK5XgKQKIhDY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "service1@iot-device-control-0612.iam.gserviceaccount.com",
+  "client_id": "101501784220066978854",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/service1%40iot-device-control-0612.iam.gserviceaccount.com"
+}
